@@ -70,7 +70,64 @@ app.put('/api/students/:studentId', cors(), async (req, res) =>{
   }
 })
 
+// create the get request
+app.get('/api/sightings', cors(), async (req, res) => {
+  try {
 
+    const { rows: sightings } = await db.query('SELECT * FROM sightings');
+    res.send(sightings);
+  } catch (e) {
+    return res.status(400).json({ e });
+  }
+});
+
+// create the POST request
+app.post('/api/sightingsposted', cors(), async (req, res) => {
+  const newSighting = {
+    time_sighted: req.body.time_sighting,
+    date_sighted: req.body.date_sighted,
+    individual: req.body.individual,
+    location: req.body.location,
+    healthy: req.body.healthy,
+    sighter: req.body.sighter,
+  };
+  console.log([newSighting.location]);
+  const result = await db.query(
+    'INSERT INTO sightings(id, time_sighted, date_sighted, individual, location, healthy, sighter) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+    [newSighting.time_sighted, newSighting.date_sighted, newSighting.individual, newSighting.location, newSighting.healthy, newSighting.sighter],
+  );
+  console.log(result.rows[0]);
+  res.json(result.rows[0]);
+});
+
+//A put request - Update a student 
+app.put('/api/sightings/:sightingId', cors(), async (req, res) =>{
+  console.log(req.params);
+  //This will be the id that I want to find in the DB - the sighting to be updated
+  const sightingId = req.params.sightingId
+  const updatedSighting = { 
+    id: req.body.id, 
+    time_sighted: req.body.time_sighting,
+    date_sighted: req.body.date_sighted,
+    individual: req.body.individual,
+    location: req.body.location,
+    healthy: req.body.healthy,
+    sighter: req.body.sighter}
+  console.log("In the server from the url - the sighting id", sightingId);
+  console.log("In the server, from the react - the sighting to be edited", updatedSighting);
+  // UPDATE sighting SET lastname = "something" WHERE id="16";
+  const query = `UPDATE sightings SET time_sighted=$1, date_sighted=$2, individual=$3, location=$4, healthy=$5, sighter=$6 WHERE id=${sightingId} RETURNING *`;
+  const values = [updatedSighting.time_sighted, updatedSighting.date_sighted, updatedSighting.individual, updatedSighting.location, updatedSighting.healthy, updatedSighting.sighter];
+  try {
+    const updated = await db.query(query, values);
+    console.log(updated.rows[0]);
+    res.send(updated.rows[0]);
+
+  }catch(e){
+    console.log(e);
+    return res.status(400).json({e})
+  }
+})
 
 // console.log that your server is up and running
 app.listen(PORT, () => {
