@@ -6,7 +6,6 @@ const Form = (props) => {
                           firstname: "", 
                         lastname: ""}} = props;
 
-
   // This is the oroginal State with not initial student 
   const [student, setStudent] = useState(initialStudent);
 
@@ -66,16 +65,16 @@ const Form = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <fieldset>
-        <label>First Name</label>
+        <label>Time Sighted</label>
         <input
           type="text"
           id="add-user-name"
-          placeholder="First Name"
+          placeholder="Time Sighted"
           required
           value={student.firstname}
           onChange={handleNameChange}
         />
-        <label>Last Name</label>
+        <label>Date Sighted</label>
         <input
           type="text"
           id="add-user-lastname"
