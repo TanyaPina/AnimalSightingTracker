@@ -66,20 +66,20 @@ const Form = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <fieldset>
-        <label>First Name</label>
+        <label>Time Sighted</label>
         <input
           type="text"
           id="add-user-name"
-          placeholder="First Name"
+          placeholder="Time Sighted"
           required
           value={student.firstname}
           onChange={handleNameChange}
         />
-        <label>Last Name</label>
+        <label>Date Sighted</label>
         <input
           type="text"
           id="add-user-lastname"
-          placeholder="Last Name"
+          placeholder="Date Sighted"
           required
           value={student.lastname}
           onChange={handleLastnameChange}
