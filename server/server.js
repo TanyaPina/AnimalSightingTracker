@@ -98,7 +98,7 @@ app.post('/api/sightingsposted', cors(), async (req, res) => {
   res.json(result.rows[0]);
 });
 
-//A put request - Update a student 
+//A put request - Update a sighting 
 app.put('/api/sightings/:sightingId', cors(), async (req, res) =>{
   console.log(req.params);
   //This will be the id that I want to find in the DB - the sighting to be updated
@@ -111,18 +111,14 @@ app.put('/api/sightings/:sightingId', cors(), async (req, res) =>{
     location: req.body.location,
     healthy: req.body.healthy,
     sighter: req.body.sighter}
-  console.log("In the server from the url - the sighting id", sightingId);
-  console.log("In the server, from the react - the sighting to be edited", updatedSighting);
   // UPDATE sighting SET lastname = "something" WHERE id="16";
   const query = `UPDATE sightings SET time_sighted=$1, date_sighted=$2, individual=$3, location=$4, healthy=$5, sighter=$6 WHERE id=${sightingId} RETURNING *`;
   const values = [updatedSighting.time_sighted, updatedSighting.date_sighted, updatedSighting.individual, updatedSighting.location, updatedSighting.healthy, updatedSighting.sighter];
   try {
     const updated = await db.query(query, values);
-    console.log(updated.rows[0]);
     res.send(updated.rows[0]);
 
   }catch(e){
-    console.log(e);
     return res.status(400).json({e})
   }
 })
