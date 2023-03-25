@@ -25,7 +25,6 @@ function Sightings() {
   //A function to control the update in the parent 
 
   const updateSighting = (savedSighting) =>{
-    console.log("Line 29 savedSighting", savedSighting);
     // This function should update the whole list of sightings - 
     setSightings((sightings) => {
       const newArraySightings = [];
