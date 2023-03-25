@@ -42,9 +42,7 @@ function Sightings() {
   }
   
   const onEdit = (sighting) =>{
-    console.log("This is line 26 on sightings component", sighting);
     const editingID = sighting.id;
-    console.log("Just the sighting id", sighting.id)
     setEditSightingsId(editingID);
 
   }
