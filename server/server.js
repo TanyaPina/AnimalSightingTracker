@@ -91,12 +91,10 @@ app.post('/api/sightingsposted', cors(), async (req, res) => {
     healthy: req.body.healthy,
     sighter: req.body.sighter,
   };
-  console.log([newSighting.location]);
   const result = await db.query(
     'INSERT INTO sightings(id, time_sighted, date_sighted, individual, location, healthy, sighter) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *',
     [newSighting.time_sighted, newSighting.date_sighted, newSighting.individual, newSighting.location, newSighting.healthy, newSighting.sighter],
   );
-  console.log(result.rows[0]);
   res.json(result.rows[0]);
 });
 
