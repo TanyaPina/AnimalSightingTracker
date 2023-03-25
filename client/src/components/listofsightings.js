@@ -18,16 +18,15 @@ function Sightings() {
   }, []);
 
   const addSighting = (newSighting) => {
-    //console.log(newSighting);
-    //postStudent(newSighting);
+    //postSighting(newSighting);
     setSightings((sightings) => [...sightings, newSighting]);
   };
 
-  //A function to control the update in the parent (student component)
+  //A function to control the update in the parent 
 
   const updateSighting = (savedSighting) =>{
     console.log("Line 29 savedSighting", savedSighting);
-    // This function should update the whole list of students - 
+    // This function should update the whole list of sightings - 
     setSightings((sightings) => {
       const newArraySightings = [];
       for(let sighting of sightings){
